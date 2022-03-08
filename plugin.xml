@@ -22,22 +22,16 @@
 
 	<!-- android -->
 	<platform name="android">
-		
-		<preference name="PLAY_SERVICES_VERSION" default="15.0.0"/>		
-		<framework src="com.google.android.gms:play-services-auth:$PLAY_SERVICES_VERSION"/>
-		<framework src="com.google.android.gms:play-services-auth-api-phone:$PLAY_SERVICES_VERSION"/>
-
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="OneTapSMSRetriever">
 			<param name="android-package" value="com.smsmdida.onetapsmsretriever.OneTapSMSRetriever"/>
 			</feature>
 		</config-file>
 
-		<config-file target="AndroidManifest.xml" parent="/*">
-			<uses-feature android:name="android.hardware.telephony" android:required="false" />
-		</config-file>
+     		<config-file parent="/*" target="AndroidManifest.xml" />
 
-		<source-file src="src/android/OneTapSMSRetriever.java" target-dir="src/com/smsmdida/OneTapSMSRetriever" />
+		<source-file src="src/android/OneTapSMSRetriever.java" target-dir="src/com/smsmdida/onetapsmsretriever" />
+	    	<framework custom="true" src="src/android/onetap-sms-retriever.gradle" type="gradleReference" />
 	</platform>
 
 </plugin>
