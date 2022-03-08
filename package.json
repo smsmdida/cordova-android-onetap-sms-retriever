@@ -1,0 +1,38 @@
+{
+  "name": "cordova-android-onetap-sms-retriever",
+  "version": "1.0.0",
+  "description": "Cordova plugin to retrieve SMS in Android using one tap SMS Retriever API.",
+  "cordova": {
+    "id": "cordova-android-onetap-sms-retriever",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smsmdida/cordova-android-onetap-sms-retriever.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smsmdida/cordova-android-onetap-sms-retriever/issues"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "sms",
+    "retriever"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=7.1.0"
+    },
+    {
+      "name": "cordova-android",
+      "version": ">=6.3.0"
+    }
+  ],
+  "author": {
+    "name": "Eslsm Sabry"
+  },
+  "license": "MIT"
+}

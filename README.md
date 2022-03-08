@@ -1,0 +1,1 @@
+Cordova plugin to retrieve SMS in Android using one tap SMS Retriever API.

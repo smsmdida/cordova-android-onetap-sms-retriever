@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="cordova-plugin-sms-retriever"
+	version="1.0.0">
+
+	<name>SMS One Tap Retriever</name>
+	<description>Cordova plugin to retrieve SMS in Android using one tap SMS Retriever API.</description>
+	<author>Eslam Sabry</author>
+	<license>MIT</license>
+	<keywords>sms,one tap,retriever</keywords>
+
+	<engines>
+		<engine name="cordova" version=">=7.1.0"/>
+		<engine name="cordova-android" version=">=6.3.0"/>
+	</engines>
+
+	<js-module src="www/OneTapSMSRetriever.js" name="OneTapSMSRetriever">
+		<clobbers target="window.SMSRetriever" />
+	</js-module>
+
+	<!-- android -->
+	<platform name="android">
+		
+		<preference name="PLAY_SERVICES_VERSION" default="15.0.0"/>		
+		<framework src="com.google.android.gms:play-services-auth:$PLAY_SERVICES_VERSION"/>
+		<framework src="com.google.android.gms:play-services-auth-api-phone:$PLAY_SERVICES_VERSION"/>
+
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="OneTapSMSRetriever">
+			<param name="android-package" value="com.smsmdida.onetapsmsretriever.OneTapSMSRetriever"/>
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/*">
+			<uses-feature android:name="android.hardware.telephony" android:required="false" />
+		</config-file>
+
+		<source-file src="src/android/OneTapSMSRetriever.java" target-dir="src/com/smsmdida/OneTapSMSRetriever" />
+	</platform>
+
+</plugin>
