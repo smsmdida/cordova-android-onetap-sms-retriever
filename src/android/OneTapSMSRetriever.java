@@ -119,7 +119,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
             if (resultCode == RESULT_OK) {
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
 				PluginResult result = new PluginResult(PluginResult.Status.OK, message);
-				callbackContext.sendPluginResult(result);
+				this.callbackContext.sendPluginResult(result);
             }
             break;
         }
