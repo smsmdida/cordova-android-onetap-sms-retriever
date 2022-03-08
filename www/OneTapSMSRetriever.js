@@ -1,14 +1,23 @@
-var oneTapSMSRetriever = {};
+// Empty constructor
+function OneTapSMSRetriever() {}
 
-/* Start the SMS Retriever API and listen for incoming SMS and callback */
-oneTapSMSRetriever.registerSMSListner = function(successCallback, failureCallback) {
+// The function that passes work along to native shells
+// Message is a string, duration may be 'long' or 'short'
+OneTapSMSRetriever.prototype.registerSMSListner = function(successCallback, failureCallback) {
 	cordova.exec( successCallback, failureCallback, 'OneTapSMSRetriever', 'REGISTER_OTP_SMS_LISTNER', [] );
-};
+}
 
-/* Remove listner */
-oneTapSMSRetriever.unregisterSMSListner = function(successCallback, failureCallback) {
+OneTapSMSRetriever.prototype.unregisterSMSListner = function(successCallback, failureCallback) {
 	cordova.exec( successCallback, failureCallback, 'OneTapSMSRetriever', 'UNREGISTER_OTP_SMS_LISTNER', [] );
+}
+
+
+// Installation constructor that binds ToastyPlugin to window
+OneTapSMSRetriever.install = function() {
+  if (!window.plugins) {
+    window.plugins = {};
+  }
+  window.plugins.OneTapSMSRetriever = new OneTapSMSRetriever();
+  return window.plugins.OneTapSMSRetriever;
 };
-
-
-module.exports = oneTapSMSRetriever;
+cordova.addConstructor(OneTapSMSRetriever.install);
