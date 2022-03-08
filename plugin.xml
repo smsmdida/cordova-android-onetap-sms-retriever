@@ -17,7 +17,7 @@
 	</engines>
 
 	<js-module src="www/OneTapSMSRetriever.js" name="OneTapSMSRetriever">
-		<clobbers target="window.OneTapSMSRetriever" />
+		<clobbers target="window.plugins.OneTapSMSRetriever" />
 	</js-module>
 
 	<!-- android -->
