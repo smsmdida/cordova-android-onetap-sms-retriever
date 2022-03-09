@@ -29,6 +29,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	private CallbackContext callbackContext;
 	private SmsRetrieverClient smsRetrieverClient;
 	BroadcastReceiver broadcastReceiver = null;
+    Activity cordovaActivity;
 
 	private static final String TAG = "cordova-android-one-tap-sms-retriever";
 	private static final String REGISTER_OTP_SMS_LISTNER = "REGISTER_OTP_SMS_LISTNER";
@@ -43,9 +44,10 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		Log.d(TAG, "initialize");
 		super.initialize(cordova, webView);
+        this.cordovaActivity = cordova.getActivity();
 
 		// Get an instance of SmsRetrieverClient, used to start listening for a matching SMS message.
-		smsRetrieverClient = SmsRetriever.getClient(cordova.getActivity().getApplicationContext());
+		smsRetrieverClient = SmsRetriever.getClient(this.cordovaActivity);
 	}
 
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -70,7 +72,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	public void unRegisterBroadcastReceiver() {
 		if (this.broadcastReceiver != null) {
 			try {
-				cordova.getActivity().getApplicationContext().unregisterReceiver(this.broadcastReceiver);
+				this.cordovaActivity.unregisterReceiver(this.broadcastReceiver);
 				this.broadcastReceiver = null;
 				Log.d(TAG, "SMS Retriever unregistered successfully");
 			} catch (Exception e) {
@@ -90,9 +92,9 @@ public class OneTapSMSRetriever extends CordovaPlugin {
                         Status status = (Status) extras.get(SmsRetriever.EXTRA_STATUS);
                         switch(status.getStatusCode()) {
                             case CommonStatusCodes.SUCCESS:
-                                Intent consentIntent = extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT);
+								Intent consentIntent = extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT);
                                 try {
-                                    cordova.getActivity().getApplicationContext().startActivityForResult(consentIntent, SMS_CONSENT_REQUEST, null);
+                                    this.cordovaActivity.startActivityForResult(consentIntent, SMS_CONSENT_REQUEST, null);
                                 } catch (ActivityNotFoundException e) {
                                     // Handle the exception ...
                                 }
@@ -105,7 +107,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
                 }
             };
             IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
-            reactContext.registerReceiver(this.broadcastReceiver, intentFilter, SmsRetriever.SEND_PERMISSION, null);
+            this.cordovaActivity.registerReceiver(this.broadcastReceiver, intentFilter, SmsRetriever.SEND_PERMISSION, null);
 
             smsRetrieverClient.startSmsUserConsent(null);
 
