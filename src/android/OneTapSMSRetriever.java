@@ -109,7 +109,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
                 }
             };
             IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
-            cordovaActivity.registerReceiver(broadcastReceiver, intentFilter, SmsRetriever.SEND_PERMISSION, null);
+            cordovaActivity.registerReceiver(broadcastReceiver, intentFilter);
 
             smsRetrieverClient.startSmsUserConsent(null);
 
@@ -118,6 +118,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 
 	@Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
         case SMS_CONSENT_REQUEST:
             if (resultCode == RESULT_OK) {
