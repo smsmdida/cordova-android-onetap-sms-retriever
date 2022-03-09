@@ -15,6 +15,7 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
+import android.content.ActivityNotFoundException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +24,7 @@ import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.Status;
+import static android.app.Activity.RESULT_OK;
 
 public class OneTapSMSRetriever extends CordovaPlugin {
 
@@ -70,10 +72,10 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	}
 
 	public void unRegisterBroadcastReceiver() {
-		if (this.broadcastReceiver != null) {
+		if (broadcastReceiver != null) {
 			try {
-				this.cordovaActivity.unregisterReceiver(this.broadcastReceiver);
-				this.broadcastReceiver = null;
+				cordovaActivity.unregisterReceiver(broadcastReceiver);
+				broadcastReceiver = null;
 				Log.d(TAG, "SMS Retriever unregistered successfully");
 			} catch (Exception e) {
 				Log.e(TAG, "Error unregistering network receiver: " + e.getMessage());
@@ -82,8 +84,8 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	}
 
     public void registerBroadcastReceiver(){
-        if(this.broadcastReceiver == null){
-            this.broadcastReceiver = new BroadcastReceiver() {
+        if(broadcastReceiver == null){
+            broadcastReceiver = new BroadcastReceiver() {
 
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -94,7 +96,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
                             case CommonStatusCodes.SUCCESS:
 								Intent consentIntent = extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT);
                                 try {
-                                    this.cordovaActivity.startActivityForResult(consentIntent, SMS_CONSENT_REQUEST, null);
+                                    cordovaActivity.startActivityForResult(consentIntent, SMS_CONSENT_REQUEST, null);
                                 } catch (ActivityNotFoundException e) {
                                     // Handle the exception ...
                                 }
@@ -107,7 +109,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
                 }
             };
             IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
-            this.cordovaActivity.registerReceiver(this.broadcastReceiver, intentFilter, SmsRetriever.SEND_PERMISSION, null);
+            cordovaActivity.registerReceiver(broadcastReceiver, intentFilter, SmsRetriever.SEND_PERMISSION, null);
 
             smsRetrieverClient.startSmsUserConsent(null);
 
