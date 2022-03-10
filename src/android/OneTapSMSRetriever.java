@@ -14,9 +14,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
 import android.content.ActivityNotFoundException;
-import android.widget.Toast;  
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,16 +52,11 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	}
 
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		PluginResult result = null;
 		this.callbackContext = callbackContext;
 		if (action.equals(REGISTER_OTP_SMS_LISTNER)) {
 			this.registerBroadcastReceiver();
 		} else if (action.equals(UNREGISTER_OTP_SMS_LISTNER)){
 			this.unRegisterBroadcastReceiver();
-		} else {
-			Log.d(TAG, String.format("Invalid action passed: %s", action));
-			result = new PluginResult(PluginResult.Status.INVALID_ACTION);
-			callbackContext.sendPluginResult(result);
 		}
 		return true;
 	}
@@ -123,8 +116,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
         case SMS_CONSENT_REQUEST:
             if (resultCode == RESULT_OK) {
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
-				PluginResult result = new PluginResult(PluginResult.Status.OK, message);
-				this.callbackContext.sendPluginResult(result);
+				this.callbackContext.success(message);
             }
             break;
         }
