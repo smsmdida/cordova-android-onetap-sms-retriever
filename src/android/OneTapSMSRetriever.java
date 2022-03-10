@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import androidx.annotation.Nullable;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -119,7 +118,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
     }
 
 	@Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Toast.makeText(cordovaActivity, resultCode,Toast.LENGTH_LONG).show();
 
         switch (requestCode) {
