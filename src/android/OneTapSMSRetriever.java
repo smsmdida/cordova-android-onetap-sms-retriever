@@ -90,7 +90,8 @@ public class OneTapSMSRetriever extends CordovaPlugin {
                             case CommonStatusCodes.SUCCESS:
 								Intent consentIntent = extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT);
                                 try {
-                                    cordovaActivity.startActivityForResult(consentIntent, SMS_CONSENT_REQUEST, null);
+									OneTapSMSRetriever.this.cordovaActivity.startActivityForResult((CordovaPlugin)OneTapSMSRetriever.this, consentIntent, SMS_CONSENT_REQUEST);
+                                    // cordovaActivity.startActivityForResult(consentIntent, SMS_CONSENT_REQUEST, null);
                                 } catch (ActivityNotFoundException e) {
                                     // Handle the exception ...
                                 }
@@ -116,7 +117,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
         case SMS_CONSENT_REQUEST:
             if (resultCode == RESULT_OK) {
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
-				this.callbackContext.success(message);
+				callbackContext.success(message);
             }
             break;
         }
