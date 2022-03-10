@@ -121,7 +121,7 @@ public class OneTapSMSRetriever extends CordovaPlugin {
 	@Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(cordovaActivity,requestCode + " " + resultCode + " " + data),Toast.LENGTH_LONG).show();  
+        Toast.makeText(cordovaActivity, resultCode,Toast.LENGTH_LONG).show();
 
         switch (requestCode) {
         case SMS_CONSENT_REQUEST:
